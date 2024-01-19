@@ -1,37 +1,28 @@
 const express = require('express');
-const mysql = require('mysql');
-const dotenv = require('dotenv');
 const path = require('path');
+const db = require('./db');
 
-dotenv.config();
 const app = express();
+
+// Middleware för att hantera form-data
 app.use(express.urlencoded({ extended: true }));
+
+// Ställer in mappen 'public' för att servera statiska filer
 app.use(express.static(path.join(__dirname, 'public')));
 
-const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-});
-
-connection.connect(error => {
-    if (error) {
-        console.error('Error connecting to the database:', error);
-        return;
-    }
-    console.log('Connected to the database.');
-});
-
+// Rotrutt som visar inloggningssidan
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
+// Hanterar inloggningsförfrågan
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-    // Här lägger du till logiken för att kontrollera användarnamn och lösenord mot databasen
+    // Här skulle du lägga till din logik för att validera användaren mot databasen
+    // Exempelvis en SQL-förfrågan som söker efter användaren
 });
 
+// Startar servern
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
