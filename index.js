@@ -7,7 +7,7 @@ const server = http.createServer((req, res) => {
     if (err) {
       res.statusCode = 500;
       res.setHeader('Content-Type', 'text/plain');
-      res.end('Error loading the page blabla');
+      res.end('Error loading the page');
     } else {
       res.statusCode = 200;
       res.setHeader('Content-Type', 'text/html');
